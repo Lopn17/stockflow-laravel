@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Providers;
+
+use App\Events\StockUpdated;
+use App\Listeners\CheckLowStock;
+use App\Listeners\LogStockUpdate;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+
+class EventServiceProvider extends ServiceProvider
+{
+    protected $listen = [
+        StockUpdated::class => [
+            CheckLowStock::class,
+            LogStockUpdate::class,
+        ],
+    ];
+}
