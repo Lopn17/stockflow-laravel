@@ -1,58 +1,459 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# StockFlow
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern, portfolio-grade Inventory Management System built with Laravel using clean architecture principles, Repository Pattern, Service Layer, Events, Policies, and Role-Based Access Control (RBAC).
 
-## About Laravel
+Designed to showcase production-level Laravel development practices while solving real-world inventory management problems.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Inventory Management
+- Stock In
+- Stock Out
+- Stock Adjustment
+- Inventory Transaction History
+- Low Stock Detection
+- Out of Stock Monitoring
 
-## Learning Laravel
+### Product Management
+- Product CRUD
+- SKU Management
+- Barcode Support
+- Product Images
+- Category Assignment
+- Supplier Assignment
+- Soft Deletes
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Dashboard
+- Total Products
+- Total Categories
+- Total Suppliers
+- Stock Value
+- Low Stock Alerts
+- Out of Stock Statistics
+- Stock Movement Charts
+- Top Products by Value
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Reporting
+- Inventory Reports
+- PDF Export
+- Excel Export
+- Transaction Reports
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### User Management
+- Admin
+- Staff
+- Viewer
 
-## Agentic Development
+### Notifications
+- Low Stock Alerts
+- Activity Logging
+- Event-Based Notifications
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
+
+# Tech Stack
+
+## Backend
+- Laravel
+- PHP 8+
+- MySQL
+
+## Frontend
+- Blade
+- Tailwind CSS
+- Alpine.js
+- Chart.js
+
+## Architecture
+- Service Layer Pattern
+- Repository Pattern
+- Event Driven Architecture
+- Policy-Based Authorization
+- Form Request Validation
+- Dependency Injection
+
+---
+
+# Architecture
+
+The project follows Separation of Concerns.
+
+## Controllers
+Responsible only for handling HTTP requests and responses.
+
+## Services
+Contain business logic.
+
+Examples:
+- Stock movements
+- Report generation
+- Activity logging
+
+## Repositories
+Handle database operations and data access.
+
+## Models
+Represent database entities and relationships.
+
+## Policies
+Handle authorization logic.
+
+## Events & Listeners
+Handle side effects such as:
+- Logging
+- Notifications
+- Low stock checks
+
+---
+
+# Project Structure
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+stockflow/
+├── app/
+│   ├── Events/
+│   ├── Exceptions/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   ├── Middleware/
+│   │   └── Requests/
+│   ├── Listeners/
+│   ├── Models/
+│   ├── Notifications/
+│   ├── Policies/
+│   ├── Repositories/
+│   └── Services/
+├── database/
+│   ├── migrations/
+│   ├── factories/
+│   └── seeders/
+└── resources/
+    └── views/
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+# Database Design
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Categories
+Stores product categories.
 
-## Code of Conduct
+## Suppliers
+Stores supplier information.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Products
+Stores inventory items.
 
-## Security Vulnerabilities
+Important fields:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- SKU
+- Barcode
+- Purchase Price
+- Selling Price
+- Minimum Stock
+- Current Stock
 
-## License
+## Inventory Transactions
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Tracks all inventory movements.
+
+Types:
+
+- stock_in
+- stock_out
+- adjustment
+
+## Activity Logs
+
+Stores user activity history.
+
+---
+
+# Role-Based Access Control (RBAC)
+
+## Admin
+
+Can:
+- Manage products
+- Manage suppliers
+- Manage categories
+- Manage users
+- Manage inventory
+- Access activity logs
+
+## Staff
+
+Can:
+- Manage inventory
+- View products
+- View reports
+
+## Viewer
+
+Can:
+- View products
+- View reports
+
+Cannot:
+- Modify data
+
+---
+
+# Inventory Workflow
+
+## Stock In
+
+1. User submits stock-in request
+2. InventoryService validates data
+3. Product stock increases
+4. Transaction recorded
+5. Event dispatched
+6. Activity logged
+
+## Stock Out
+
+1. Validate stock availability
+2. Reduce stock
+3. Save transaction
+4. Dispatch event
+5. Log activity
+
+## Low Stock Detection
+
+Whenever stock changes:
+
+```php
+if ($product->current_stock <= $product->minimum_stock)
+```
+
+The system automatically:
+
+- Sends notifications
+- Displays dashboard alerts
+
+---
+
+# Event-Driven Design
+
+## Events
+
+- StockUpdated
+- ProductCreated
+
+## Listeners
+
+### CheckLowStock
+
+Checks inventory thresholds.
+
+### LogStockUpdate
+
+Creates activity log entries.
+
+Benefits:
+
+- Decoupled architecture
+- Easier maintenance
+- Easier feature expansion
+
+---
+
+# Security
+
+## Authorization
+
+Implemented using Laravel Policies.
+
+Examples:
+
+```php
+ProductPolicy
+InventoryPolicy
+SupplierPolicy
+```
+
+## Validation
+
+Implemented using Form Requests.
+
+Examples:
+
+```php
+StoreProductRequest
+UpdateProductRequest
+StoreInventoryTransactionRequest
+```
+
+---
+
+# Dashboard Features
+
+- Total Products
+- Total Categories
+- Total Suppliers
+- Inventory Value
+- Low Stock Alerts
+- Out of Stock Monitoring
+- Recent Transactions
+- Inventory Charts
+
+---
+
+# API & Routes
+
+## Products
+
+```http
+GET     /products
+POST    /products
+PUT     /products/{id}
+DELETE  /products/{id}
+```
+
+## Categories
+
+```http
+GET     /categories
+POST    /categories
+PUT     /categories/{id}
+DELETE  /categories/{id}
+```
+
+## Suppliers
+
+```http
+GET     /suppliers
+POST    /suppliers
+PUT     /suppliers/{id}
+DELETE  /suppliers/{id}
+```
+
+## Inventory
+
+```http
+POST /inventory/stock-in/{product}
+POST /inventory/stock-out/{product}
+POST /inventory/adjustment/{product}
+```
+
+---
+
+# Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/stockflow.git
+```
+
+Navigate into the project:
+
+```bash
+cd stockflow
+```
+
+Install dependencies:
+
+```bash
+composer install
+npm install
+```
+
+Copy environment file:
+
+```bash
+cp .env.example .env
+```
+
+Generate application key:
+
+```bash
+php artisan key:generate
+```
+
+Configure database settings inside:
+
+```env
+DB_DATABASE=stockflow
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Run migrations and seeders:
+
+```bash
+php artisan migrate --seed
+```
+
+Start the development server:
+
+```bash
+php artisan serve
+```
+
+Compile frontend assets:
+
+```bash
+npm run dev
+```
+
+---
+
+# Testing
+
+Run all tests:
+
+```bash
+php artisan test
+```
+
+### Unit Tests
+
+- Services
+- Policies
+- Repositories
+
+### Feature Tests
+
+- Controllers
+- Authentication
+- Authorization
+- Inventory Workflow
+
+---
+
+# Architectural Decisions
+
+### Why Repository Pattern?
+
+- Easier testing
+- Database abstraction
+- Cleaner business logic
+
+### Why Service Layer?
+
+- Keeps controllers thin
+- Centralizes business rules
+
+### Why Events?
+
+- Decouples side effects
+- Easier scaling
+
+### Why Soft Deletes?
+
+Inventory history must never lose references to products.
+
+### Why Database Transactions?
+
+Ensures inventory consistency.
+
+```php
+DB::transaction(...)
+```
+
+Either all operations succeed or none do.
+
+---
